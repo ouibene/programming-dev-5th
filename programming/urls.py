@@ -17,8 +17,21 @@ from django.conf.urls import url
 from django.contrib import admin
 from blog import views
 
+from pokemon import views as pokemon_views #pokemon에서 view를 import하는데 pokemon_views로써(이름을 이것으로) import하겠다.
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.post_list),
     url(r'^profile/', views.profile),
+
+#정규표현식 연습. 항상 패턴이 맞아야 호출된다.
+    url(r'^sum2/(?P<x>[\d/]+)/$', views.mysum2), #\d는 0-9까지, /는 슬래시 1개 포함해서. 1회 이상이라는 뜻.
+
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/(?P<z>\d+)/$', views.mysum),
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/$', views.mysum),
+    url(r'^sum/(?P<x>\d+)/$', views.mysum),
+
+    url(r'^pokemon/$', pokemon_views.pokemon_list),
+
+    url(r'^comments/new/$', views.comment_new),
 ]
