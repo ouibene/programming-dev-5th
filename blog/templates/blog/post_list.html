@@ -39,7 +39,14 @@ body {
 <div class="container">
     <div class="jumbotron">
         <h1>P.rogramming</h1>
-        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.        </p>
+        <p>
+        {% for post_list in post_list %}
+            <a href="/post_detail/{{post_list.pk}}">{{post_list.title}}</a>
+            : {{post_list.created_at}}<br>
+        {% endfor %}
+        </p>
+
     </div>
 </div>
 
