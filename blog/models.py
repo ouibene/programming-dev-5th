@@ -7,6 +7,8 @@ from django.utils.deconstruct import deconstructible
 from .fields import PhoneNumberField
 from .validators import phone_number_validator, ZipCodeValidator
 
+from django.core.urlresolvers import reverse
+
 #from .validators import MinLengthvalidator, min_length_validator, lanlat_validator
 #min_length_4_validator = MinLengthValidator(4)
 #min_length_4_validator = min_length_4_validator(4)
@@ -38,6 +40,18 @@ class Post(models.Model):
         validators = [lnglat_validator], help_text='위도,경도 포맷으로 입력')
     tag_set = models.ManyToManyField('Tag', blank=True)
     phone = models.CharField(max_length=20, validators = [phone_number_validator], blank=True)
+
+# 아래 코드(함수)는 주소를 만들어주는 것. reverse. 이렇게 쓰면
+# view에서 쓴 코드
+
+#     return render(request, 'blog/post_detail.html', {
+#         'form':form,
+#         })
+
+# 를 단순하게 return redirect(post)라고 쓸 수 있다.
+
+    def get_absolute_url(self):
+        return reverse('blog.views.post_detail', args=[self.pk])
 
     def __str__(self):
         return self.title

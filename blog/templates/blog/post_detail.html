@@ -6,9 +6,20 @@
 <ul>
 {% for comment in comment_list %}
 {{form.as_p}}
-{{comment.author}} || {{comment.message}} <a href="/comment/{{comment.pk}}/edit/">수정</a>
+{{comment.author}} || {{comment.message}} <a href="">수정</a><br>
+{% empty %}
+ 첫번째 댓글의 주인공이 되어주세요!
 <br>
 {% endfor %}</ul>
+
+
+<!-- {% for comment in post.commnet_set.all %}
+    {{comment.message}}
+    {{commnet.author}}
+{% empty %}
+    첫번째 댓글의 주인공이 되어주세요
+{% endfor %} -->
+
 
 
 <h5>New comment</h5>
@@ -16,10 +27,15 @@
 
 
 
-<form method="POST" id="commentbox">
+<form method="POST" id="commentbox" url="views.comment_new">
 {% csrf_token %}
+
 {{comment_new}}
+
 <!-- <input type="text" name="author" placeholder="Username"></input>
 <input type="text" name="content" placeholder="content"></input> -->
-<input type="submit" id="commentsubmit">submit</input>
+<input type="submit" id="commentsubmit" value="submit"></input>
+<br>
+<a href = "{% url 'blog.views.post_list' %}">메인화면으로</a>
 </form>
+

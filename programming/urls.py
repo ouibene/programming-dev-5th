@@ -33,8 +33,8 @@ urlpatterns = [
 
     url(r'^pokemon/$', pokemon_views.pokemon_list),
 
-    url(r'^comment/new/$', views.comment_new, name='comment_new'),
-    url(r'^comment/(?P<pk>\d+)/edit/$', views.comment_edit),
+    url(r'^(?P<post_pk>\d+)/comment/new/$', views.comment_new, name='comment_new'),
+    url(r'^(?P<post_pk>\d+)/comment/(?P<pk>\d+)/edit/$', views.comment_edit),
 
     url(r'^post_detail/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post_new/(?P<pk>\d+)/$', views.post_new, name='post_new'),
