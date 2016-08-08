@@ -1,16 +1,35 @@
-<p><h1>{{post.title}}</h1></p>
-{{post.author}}<br>
-{{post.content}}<br>
+<!DOCTYPE html>
+<html>
+<head>
 
+</head>
+
+<body>
+<p><h1>{{post.title}}</h1></p>
+    {{post.author}}<br>
+    {{post.content}}<br>
+{% if post.photo %} <!-- 꼭 이렇게 써주어야한다. 왜냐하면 이미지가 없는 글도 있기 때문 -->
+    <img src="{{post.photo.url}}" style="width:20%; height:20%;">
+    <!-- {{post.photo}} -->
+{% endif %}
 <p>{{post.tag_set}}</p>
-<ul>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{ post.lat }},{{ post.lng }}&size=100x100&zoom=5&maptype=roadmap&markers=color:blue%7Clabel:S%7C{{ post.lat }},{{ post.lng }}" />
+<hr>
+
+<ol>
 {% for comment in comment_list %}
+    {% if comment.jjal %}
+        <img src="{{comment.jjal.url}}" style="width:20%; height:20%;" />
+    {% endif %}
 {{form.as_p}}
-{{comment.author}} || {{comment.message}} <a href="">수정</a><br>
+
+<li>{{comment.message}}     by.{{comment.author}}<a href="">수정</a><br></li>
 {% empty %}
  첫번째 댓글의 주인공이 되어주세요!
 <br>
-{% endfor %}</ul>
+
+
+{% endfor %}</ol>
 
 
 <!-- {% for comment in post.commnet_set.all %}
@@ -20,22 +39,33 @@
     첫번째 댓글의 주인공이 되어주세요
 {% endfor %} -->
 
-
-
+<hr>
 <h5>New comment</h5>
 <script src=/jquery/jquery-2.1.3.min.js></script>
 
 
 
-<form method="POST" id="commentbox" url="views.comment_new">
-{% csrf_token %}
-
+<form method="POST" id="commentbox" url="views.comment_new" enctype="multipart/form-data">
+{% csrf_token %} <!-- form tag 안에 있어야한다 -->
+<table>
+{{form.as_table}}
 {{comment_new}}
-
+</table>
 <!-- <input type="text" name="author" placeholder="Username"></input>
 <input type="text" name="content" placeholder="content"></input> -->
 <input type="submit" id="commentsubmit" value="submit"></input>
-<br>
-<a href = "{% url 'blog.views.post_list' %}">메인화면으로</a>
+<input type="button" value="main으로" onclick="location.href='{% url "blog.views.post_list" %}'";></input>
 </form>
 
+
+{% if messages %}
+<ul class="messages messages-success">
+{% for message in messages %}
+{{ message.tags }}
+
+{{ message }}
+
+{% endfor %}</ul>
+{% endif %}
+</body>
+</html>

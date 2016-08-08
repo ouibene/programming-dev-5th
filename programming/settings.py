@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'blog',
     'webtoon',
     'pokemon',
+    'bootstrap3',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -124,6 +125,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'), #static 경로까지 지정해준 것. url은 static/을 포함한 나머지를 써준다. (html에서 사용시)
+]
 
 
 EPOST_API_KEY = os.environ.get('EPOST_API_KEY', "da1560600eced7fee1470021492899")
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") #여기에 경로 저장시킴. 루트를 의미한다.
+MEDIA_URL = "/media/" #django로 요청이 들어왔을 때 /media/로 들어오면 미디어인지 판별. 꼭 / 로 끝나야한다.

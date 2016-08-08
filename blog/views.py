@@ -7,9 +7,11 @@ from blog.models import Post, Comment
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
+from django.contrib import messages
+
+
 # Create your views here.
 def post_list(request): #Post모델이므로 Post를 import한다.
-
     post_list = Post.objects.all()
     return render(request, 'blog/post_list.html', {
         'post_list' : post_list #post_list라는 이름으로 index에 넘기겠다는 뜻
@@ -30,11 +32,12 @@ def comment_new(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
 
     if request.method == "POST": #최초로 열리는 요청은 get요청. 전송을 누를 때 form태그를 post로 하고 같은 주소(view)에 대해서 method가 처리(?)
-        form = CommentModelForm(request.POST, request.FILES)
+        form = CommentModelForm(request.POST, request.FILES) # 파일 업로드 받을 때에는 필히 request.FILES 지정하기
         if form.is_valid():
             comment = form.save(commit=False) #commit=false 는 아직 저장하지 말라는 뜻.
             comment.post = post
             comment.save()
+            messages.success(request, "새 댓글을 저장했습니다.")
             return redirect(post)
 
     else:
