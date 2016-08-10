@@ -17,6 +17,8 @@ from django.core.files import File
 from django.db.models.signals import pre_save
 from programming.pil_image import thumbnail
 
+from django.conf import settings
+
 #from .validators import MinLengthvalidator, min_length_validator, lanlat_validator
 #min_length_4_validator = MinLengthValidator(4)
 #min_length_4_validator = min_length_4_validator(4)
@@ -94,6 +96,8 @@ class Post(models.Model):
 
 
 
+
+
 class Zipcode(models.Model):
     #api를 이용할 때
     #zipcode = models.IntegerField(validators = [ZipCodeValidator()])
@@ -116,7 +120,8 @@ class Comment(models.Model):
     author = models.CharField(max_length=20)
     message = models.TextField()
     jjal = models.ImageField(blank=True)
-
+#    user = models.ForeignKey(settings.AUTH_USER_MODEL) #새로 author를 씀으로써 기존의 db가 사라짐
+#shell 에서 Comment.object.filter(pk=1) 을 써야할 지도 모름...^-^..ㅠ
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)

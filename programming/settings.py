@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'webtoon',
     'pokemon',
     'bootstrap3',
+    'accounts',
 ]
 
 MIDDLEWARE_CLASSES = [

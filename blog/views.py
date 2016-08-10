@@ -55,16 +55,16 @@ def comment_edit(request, post_pk, pk):
      comment = Comment.objects.get(pk=pk)
 
      if request.method == 'POST':
-         form = CommentModelForm(request.POST, request.FILES, instance=comment)
+         form = CommentForm(request.POST, request.FILES, instance=comment)
          if form.is_valid():
-             form.save()
-             return redirect('/')
+            form.save()
+            messages.success(request, "댓글을 수정했습니다.")
+            return redirect('/')
      else:
-         form = CommentModelForm(instance=comment)
+        form = CommentForm(instance=comment)
 
-     return render(request, 'blog/comment_form.html', {
-         'form': form,
-     })
+     return redirect(post)
+
 
 
 def post_detail(request, pk):
